@@ -1,4 +1,4 @@
-# Rocket Academy Coding Bootcamp: High Card
+# High Card
 
 ## Available Scripts
 
