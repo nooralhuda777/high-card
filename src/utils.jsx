@@ -67,5 +67,41 @@ const makeDeck = () => {
   return newDeck;
 };
 
+//NA: takes the shuffled deck as an argument and returns an object with two properties:
+const dealCards = (deck) => {
+  const player1Card = deck.pop();
+  const player2Card = deck.pop();
+  return { player1Card, player2Card };
+};
+const determineWinner = (player1Card, player2Card) => {
+  if (player1Card.rank > player2Card.rank) {
+    return "Player 1";
+  } else if (player2Card.rank > player1Card.rank) {
+    return "Player 2";
+  } else {
+    // Handle tiebreaker logic, e.g., compare suits or use a random winner
+    return "Tie";
+  }
+};
+export const playRound = (deck) => {
+  const { player1Card, player2Card } = dealCards(deck);
+  const winner = determineWinner(player1Card, player2Card);
+  const newDeck = [...deck]; // Create a copy of the original deck
+  newDeck.pop(); // Remove the top two cards from the deck
+  newDeck.pop();
+  return { player1Card, player2Card, winner, deck: newDeck }; // Return the new deck
+};
+
 // Export functionality to create a shuffled 52-card deck
 export const makeShuffledDeck = () => shuffleCards(makeDeck());
+//
+// Example usage:
+const deck = makeShuffledDeck();
+const roundResult = playRound(deck);
+console.log(
+  `Player 1 card: ${roundResult.player1Card.name} of ${roundResult.player1Card.suit}`
+);
+console.log(
+  `Player 2 card: ${roundResult.player2Card.name} of ${roundResult.player2Card.suit}`
+);
+console.log(`Winner: ${roundResult.winner}`);
